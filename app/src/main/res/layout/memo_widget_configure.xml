@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1C1C1E"
+    android:padding="0dp">
+
+    <!-- Tab Container (NOW AT TOP) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#1C1C1E"
+        android:padding="8dp">
+
+        <!-- Tab Content Area -->
+        <FrameLayout
+            android:id="@+id/tab_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
+
+            <!-- Tab 1: Format & Alignment -->
+            <LinearLayout
+                android:id="@+id/panel_format"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <!-- 9-Grid (NOW AT TOP OF TAB) -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginBottom="4dp">
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_gravity="center_horizontal">
+                        <ImageButton android:id="@+id/align_tl" android:src="@drawable/ic_align_tl" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter" android:layout_marginEnd="2dp"/>
+                        <ImageButton android:id="@+id/align_tc" android:src="@drawable/ic_align_tc" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter" android:layout_marginEnd="2dp"/>
+                        <ImageButton android:id="@+id/align_tr" android:src="@drawable/ic_align_tr" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter" android:layout_marginEnd="6dp"/>
+                        <ImageButton android:id="@+id/align_cl" android:src="@drawable/ic_align_cl" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter" android:layout_marginEnd="2dp"/>
+                        <ImageButton android:id="@+id/align_cc" android:src="@drawable/ic_align_cc" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter" android:layout_marginEnd="2dp"/>
+                        <ImageButton android:id="@+id/align_cr" android:src="@drawable/ic_align_cr" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter" android:layout_marginEnd="6dp"/>
+                        <ImageButton android:id="@+id/align_bl" android:src="@drawable/ic_align_bl" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter" android:layout_marginEnd="2dp"/>
+                        <ImageButton android:id="@+id/align_bc" android:src="@drawable/ic_align_bc" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter" android:layout_marginEnd="2dp"/>
+                        <ImageButton android:id="@+id/align_br" android:src="@drawable/ic_align_br" android:background="#3A3A3C" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp" android:scaleType="fitCenter"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- Toolbar -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    android:layout_marginBottom="4dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_horizontal">
+                        <ImageButton android:id="@+id/btn_undo" android:src="@drawable/ic_undo" android:background="#3A3A3C" android:layout_width="36dp" android:layout_height="36dp" android:padding="8dp" android:scaleType="fitCenter" android:layout_marginEnd="4dp"/>
+                        <ImageButton android:id="@+id/btn_redo" android:src="@drawable/ic_redo" android:background="#3A3A3C" android:layout_width="36dp" android:layout_height="36dp" android:padding="8dp" android:scaleType="fitCenter" android:layout_marginEnd="10dp"/>
+                        <ImageButton android:id="@+id/btn_bold" android:src="@drawable/ic_bold" android:background="#3A3A3C" android:layout_width="36dp" android:layout_height="36dp" android:padding="8dp" android:scaleType="fitCenter" android:layout_marginEnd="4dp"/>
+                        <ImageButton android:id="@+id/btn_italic" android:src="@drawable/ic_italic" android:background="#3A3A3C" android:layout_width="36dp" android:layout_height="36dp" android:padding="8dp" android:scaleType="fitCenter" android:layout_marginEnd="4dp"/>
+                        <ImageButton android:id="@+id/btn_underline" android:src="@drawable/ic_underline" android:background="#3A3A3C" android:layout_width="36dp" android:layout_height="36dp" android:padding="8dp" android:scaleType="fitCenter" android:layout_marginEnd="10dp"/>
+                        <ImageButton android:id="@+id/btn_size_up" android:src="@drawable/ic_text_increase" android:background="#3A3A3C" android:layout_width="36dp" android:layout_height="36dp" android:padding="8dp" android:scaleType="fitCenter" android:layout_marginEnd="4dp"/>
+                        <ImageButton android:id="@+id/btn_size_down" android:src="@drawable/ic_text_decrease" android:background="#3A3A3C" android:layout_width="36dp" android:layout_height="36dp" android:padding="8dp" android:scaleType="fitCenter" android:layout_marginEnd="8dp"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- Save Button (NOW INSIDE TAB) -->
+                <Button
+                    android:id="@+id/save_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/save_memo"
+                    android:backgroundTint="#0A84FF"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:padding="0dp"
+                    android:minHeight="16dp"/>
+            </LinearLayout>
+
+            <!-- Tab 2: Text Color -->
+            <LinearLayout
+                android:id="@+id/panel_text_color"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="十六进制 #" android:textColor="#8E8E93" android:textSize="12sp"/>
+                    <EditText android:id="@+id/edit_hex_color" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="FFFFFF" android:textColor="#FFFFFF" android:textColorHint="#48484A" android:maxLength="6" android:textSize="14sp" android:background="@null" android:inputType="textCapCharacters" android:padding="4dp" android:layout_marginStart="4dp"/>
+                </LinearLayout>
+                <HorizontalScrollView 
+                    android:id="@+id/text_color_scroll_view"
+                    android:layout_width="match_parent" 
+                    android:layout_height="wrap_content" 
+                    android:scrollbars="none">
+                    <GridLayout android:id="@+id/text_color_container_grid" android:layout_width="wrap_content" android:layout_height="wrap_content" android:rowCount="2" android:columnCount="12"/>
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <!-- Tab 3: Background -->
+            <LinearLayout
+                android:id="@+id/panel_bg_color"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="十六进制 #" android:textColor="#8E8E93" android:textSize="12sp"/>
+                    <EditText android:id="@+id/edit_bg_hex_color" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:hint="000000" android:textColor="#FFFFFF" android:textColorHint="#48484A" android:maxLength="6" android:textSize="14sp" android:background="@null" android:inputType="textCapCharacters" android:padding="4dp" android:layout_marginStart="4dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="不透明度" android:textColor="#8E8E93" android:gravity="end" android:textSize="12sp" android:layout_marginEnd="0dp"/>
+                    <SeekBar android:id="@+id/seek_bg_alpha" android:layout_width="120dp" android:layout_height="wrap_content" android:max="255" android:progressBackgroundTint="#0A84FF" android:progressTint="#FFFFFF" android:thumbTint="#FFFFFF" android:layout_marginStart="0dp" android:layout_marginEnd="0dp"/>
+                </LinearLayout>
+                <HorizontalScrollView 
+                    android:id="@+id/bg_color_scroll_view"
+                    android:layout_width="match_parent" 
+                    android:layout_height="wrap_content" 
+                    android:scrollbars="none">
+                    <GridLayout android:id="@+id/bg_color_container_grid" android:layout_width="wrap_content" android:layout_height="wrap_content" android:rowCount="2" android:columnCount="12"/>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- TabLayout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#1C1C1E"
+            app:tabIndicatorColor="#0A84FF"
+            app:tabSelectedTextColor="#0A84FF"
+            app:tabTextColor="#8E8E93"
+            app:tabTextAppearance="@android:style/TextAppearance.Small"
+            app:tabMode="fixed"
+            app:tabGravity="fill">
+            <com.google.android.material.tabs.TabItem android:text="编辑"/>
+            <com.google.android.material.tabs.TabItem android:text="文字颜色"/>
+            <com.google.android.material.tabs.TabItem android:text="背景色"/>
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+
+    <!-- MAIN EDITOR (NOW AT BOTTOM) -->
+    <com.linghuye.memowidget.SelectionAwareEditText
+        android:id="@+id/appwidget_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top|start"
+        android:hint="@string/memo_hint"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#88FFFFFF"
+        android:background="#1C1C1E"
+        android:padding="16dp"
+        android:textSize="18sp" />
+
+</LinearLayout>

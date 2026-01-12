@@ -1,0 +1,105 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "编译并上传Debug版的Android-App程序",
+            "type": "shell",
+            "command": "./gradlew assembleDebug && ${ANDROID_TOOL_ADB} install -r app/build/outputs/apk/debug/app-debug.apk",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    // Java Home & Android Tool ADB are needed
+                    // gradlew is auto-downloaded and self-configured
+                    "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+                    "ANDROID_TOOL_ADB": "/Users/linghuye/Library/Android/sdk/platform-tools/adb"
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+        },
+        {
+            "label": "编译并上传Release版的Android-App程序",
+            "type": "shell",
+            "command": "./gradlew assembleRelease && ${ANDROID_TOOL_ADB} install -r app/build/outputs/apk/release/app-release.apk",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    // Java Home & Android Tool ADB are needed
+                    // gradlew is auto-downloaded and self-configured
+                    "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home",
+                    "ANDROID_TOOL_ADB": "/Users/linghuye/Library/Android/sdk/platform-tools/adb"
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+                "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+        },
+        {
+            "label": "编译Debug版的Android-App程序",
+            "type": "shell",
+            "command": "./gradlew assembleDebug",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    // Java Home & Android Tool ADB are needed
+                    "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+        },
+        {
+            "label": "清除当前编译",
+            "type": "shell",
+            "command": "./gradlew clean",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "JAVA_HOME": "/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+                }
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+        }
+    ]
+}

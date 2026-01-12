@@ -1,0 +1,48 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "调试Android-App",
+            "type": "android",
+            "request": "launch",
+            "appSrcRoot": "${workspaceRoot}/app/src/main",
+            "apkFile": "${workspaceRoot}/app/build/outputs/apk/debug/app-debug.apk",
+            "adbSocket": "localhost:5037",
+            "preLaunchTask": "编译Debug版的Android-App程序",
+            "internalConsoleOptions": "openOnSessionStart",
+            "presentation": {
+                "hidden": false,
+                "group": "调试",
+                "order": 1,
+            },
+            
+            // Automatically launch 'adb start-server' if not already started.
+            "autoStartADB": true,
+
+            // Launch behaviour if source files have been saved after the APK was built.
+            "staleBuild": "warn",
+
+            // Target Device ID (as indicated by 'adb devices').
+            // Use this to specify which device is used for deployment when multiple devices are connected.
+            "targetDevice": "",
+
+            // Fully qualified path to the AndroidManifest.xml file compiled into the APK.
+            // Default: "${appSrcRoot}/AndroidManifest.xml"
+            "manifestFile": "${workspaceRoot}/app/src/main/AndroidManifest.xml",
+
+            // Manually specify the activity to run when the app is started. This option is
+            // mutually exclusive with "amStartArgs".
+            "launchActivity": ".MemoWidgetConfigureActivity",
+
+            // Time in milliseconds to wait after launching an app before attempting to attach
+            // the debugger. Default: 1000ms
+            "postLaunchPause": 1000,
+    
+            // Set to true to output debugging logs for diagnostics.
+            "trace": false
+        }
+    ]
+}

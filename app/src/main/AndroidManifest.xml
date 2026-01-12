@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    AndroidManifest.xml 是 Android 应用的清单文件，它是应用的元数据中心。
+    它告诉系统应用包含哪些组件（Activity, Service, Receiver, Provider），
+    应用需要的权限，以及应用支持的最低 SDK 版本等关键信息。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MemoWidget">
+
+        <!-- 
+            桌面小部件的广播接收器 (AppWidgetProvider)。
+            android:name 指定处理逻辑的类名。
+            android:exported="true" 表示它允许接收来自系统或其他应用的广播。
+            android:label 是在桌面长按添加小部件时显示的名称。
+        -->
+        <receiver
+            android:name=".MemoWidgetProvider"
+            android:exported="true"
+            android:label="@string/widget_name"
+            android:configure=".MemoWidgetConfigureActivity">
+            <!-- 意图过滤器：告诉系统该接收器可以处理 APPWIDGET_UPDATE 动作 -->
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <!-- 元数据：关联小部件的 definition 属性（如最小宽高、刷新频率、初始布局等）-->
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/memo_widget_info" />
+        </receiver>
+
+        <!-- 
+            配置界面 (Configuration Activity)。
+            当用户向桌面添加小部件时，或者点击已添加的小部件进行重新编辑时，此 Activity 会被启动。
+            android:windowSoftInputMode="adjustResize" 确保键盘弹出时界面会自适应调整，不遮挡输入框。
+        -->
+        <activity
+            android:name=".MemoWidgetConfigureActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MemoWidget.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTask"
+        >
+            <intent-filter>
+                <!-- 关联小部件配置动作，系统会根据该动作找到该小部件的配置入口 -->
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".RemoteMemoWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" 
+        />
+    </application>
+</manifest>

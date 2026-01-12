@@ -1,0 +1,54 @@
+# Android
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+*.keystore
+*.jks
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Android Studio
+*.iml
+.idea/
+build/
+.navigation/
+captures/
+output.json
+lint/
+
+# 本地配置文件
+local.properties
+
+# 构建产物
+app/build/
+*/build/
+build/
+release/
+*.apk
+*.ap_
+*.aab
+
+# 日志
+*.log
+log/
+
+# 缓存
+.cache/
+*.class
+*.jar
+
+# 其他
+*.swp
+*.bak
+*.tmp
+*.temp
+*~
