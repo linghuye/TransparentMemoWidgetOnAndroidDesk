@@ -55,7 +55,7 @@ internal fun updateAppWidget(ctx: Context, appWidgetManager: AppWidgetManager, a
         
         // OEM产商会定制padding，需要加上
         val paddingRect = AppWidgetHostView.getDefaultPaddingForWidget(ctx, ComponentName(ctx, MemoWidgetProvider::class.java), null)
-        appWidgetHeightPx += paddingRect.top + 5;// // This is a magic number
+        appWidgetHeightPx += paddingRect.top;// // This is a magic number
 
         // 设置用于Adapter启动RemoteMemoWidgetService的Intent
         val listviewServiceIntent = Intent(ctx, RemoteMemoWidgetService::class.java).apply {
