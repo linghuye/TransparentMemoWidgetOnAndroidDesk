@@ -7,12 +7,15 @@ import android.util.TypedValue
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 
-class RemoteMemoWidgetService : RemoteViewsService() {
-    override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
+class RemoteMemoWidgetService : RemoteViewsService() 
+{
+    override fun onGetViewFactory(intent: Intent): RemoteViewsFactory 
+    {
         return MemoWidgetFactory(applicationContext, intent)
     }
 }
 
+// 每个Widget实例对应一个MemoWidgetFactory
 class MemoWidgetFactory(private val context: Context, private val intent: Intent) 
     : RemoteViewsService.RemoteViewsFactory 
 {
@@ -22,14 +25,17 @@ class MemoWidgetFactory(private val context: Context, private val intent: Intent
     private var gravity: Int = android.view.Gravity.TOP or android.view.Gravity.START
     private var nWidgetHeightInPixel: Int = 0
 
-    override fun onCreate() {
+    override fun onCreate() 
+    {
         appWidgetId = this.intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
         nWidgetHeightInPixel = this.intent.getIntExtra("widget_height_px", 0)
     }
 
-    override fun onDataSetChanged() {
+    override fun onDataSetChanged() 
+    {
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) return
         android.util.Log.d("yelinghuye", "widget[$appWidgetId] onDataSetChanged")
+        
         val jsonData = loadTitlePref(context, appWidgetId)
         fullText = deserializeSpannable(jsonData)
         fontSize = loadFontSizePref(context, appWidgetId)
@@ -37,7 +43,9 @@ class MemoWidgetFactory(private val context: Context, private val intent: Intent
         nWidgetHeightInPixel = this.intent.getIntExtra("widget_height_px", 0)
     }
 
-    override fun getViewAt(position: Int): RemoteViews {
+    override fun getViewAt(position: Int): RemoteViews 
+    {
+        // RemoteViews只是个数据包，不是实际的View
         val remoteViews = RemoteViews(context.packageName, R.layout.memo_widget_textview_listitem)
         val textViewId = R.id.widget_item_text
 
@@ -53,9 +61,7 @@ class MemoWidgetFactory(private val context: Context, private val intent: Intent
         remoteViews.setInt(textViewId, "setGravity", gravity)
         
         // 设置最小高度为 Widget 高度，确保短文本对齐（如居中/底端）生效
-        if (nWidgetHeightInPixel > 0) {
-            remoteViews.setInt(textViewId, "setMinimumHeight", nWidgetHeightInPixel)
-        }
+        remoteViews.setInt(textViewId, "setMinimumHeight", nWidgetHeightInPixel)
 
         // 点击事件填充
         remoteViews.setOnClickFillInIntent(textViewId, Intent())

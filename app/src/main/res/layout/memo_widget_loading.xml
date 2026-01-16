@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    透明的加载视图布局：
+    当 RemoteViewsFactory 正在加载数据时显示，
+    使用透明背景避免显示系统默认的"正在加载"文字。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+</FrameLayout>

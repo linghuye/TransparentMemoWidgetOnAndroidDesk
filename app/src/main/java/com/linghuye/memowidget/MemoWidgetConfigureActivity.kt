@@ -43,6 +43,7 @@ class MemoWidgetConfigureActivity : Activity() {
     private var currentFontGlobalSize = 16.0f
     private var hadNotifyHost = false
     private var isReadyResumeWork = false
+    private var isTextDataChangedThisTurn = false
 
     // 用于保存文本状态（包括内容和光标位置）的类
     data class TextState(
@@ -110,6 +111,15 @@ class MemoWidgetConfigureActivity : Activity() {
         setIntent(intent)
     }
 
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint();
+        android.util.Log.i("yelinghuye", "widget[$appWidgetId] onUserLeaveHint")
+
+        if(!hadNotifyHost) {
+            notifyDeskHostWidgetReady()
+        }
+    }
+
     override fun onResume() {
         hadNotifyHost = false
 
@@ -125,9 +135,9 @@ class MemoWidgetConfigureActivity : Activity() {
 
         // 从后台数据加载当前的整体编辑状态
         restoreAllEditStatusFromSharedPrefs(appWidgetId)
-        isReadyResumeWork = true
-
         appWidgetText.requestFocus()
+        isReadyResumeWork = true
+        isTextDataChangedThisTurn = false
         super.onResume()
     }
 
@@ -144,12 +154,12 @@ class MemoWidgetConfigureActivity : Activity() {
         // 保存当前编辑状态到 SharedPreferences
         this.saveAllEditStatusToSharedPrefs(appWidgetId)
         
-        // 触发物理插件更新
-        updateAppWidget(this, AppWidgetManager.getInstance(this), appWidgetId)
-        
         // 通知宿主,配置成功,并返回appWidgetId
         setResult(RESULT_OK, intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId))
 
+        // 触发物理插件更新
+        updateAppWidget(this, AppWidgetManager.getInstance(this), appWidgetId, isTextDataChangedThisTurn)
+        
         hadNotifyHost = true
     }
 
@@ -301,7 +311,8 @@ class MemoWidgetConfigureActivity : Activity() {
     private fun onSetGravityButtonClick(gravity: Int) {
         currentGravity = gravity
         appWidgetText.gravity = currentGravity
-        updateAlignmentUI()
+        isTextDataChangedThisTurn = true
+        this.updateAlignmentUI()
     }
 
     /** 更新所有 UI 元素（字体、颜色、样式）的突出显示状态，取决于当前光标/选择位置。 */
@@ -456,6 +467,8 @@ class MemoWidgetConfigureActivity : Activity() {
 
     /** 为撤销 (Undo) 历史，记录快照当前的编辑器状态。 */
     private fun saveCurrentTextStateForUndo() {
+        isTextDataChangedThisTurn = true
+
         // 避免在撤销/重做过程中保存状态
         if (isUndoRedoOperation) return
         
@@ -487,6 +500,7 @@ class MemoWidgetConfigureActivity : Activity() {
 
         // 弹出并应用前一个状态
         restoreTextState(undoStack.pop())
+        isTextDataChangedThisTurn = true
     }
 
     /** 在历史堆栈中向前移动。 */
@@ -632,6 +646,7 @@ class MemoWidgetConfigureActivity : Activity() {
             val alpha = seekBgAlpha.progress
             val argbColor = Color.argb(alpha, Color.red(bgColor), Color.green(bgColor), Color.blue(bgColor))
             appWidgetText.setBackgroundColor(argbColor)
+            isTextDataChangedThisTurn = true
         }
     }
     
@@ -770,6 +785,7 @@ class MemoWidgetConfigureActivity : Activity() {
             // `coerceIn` 确保字体大小在合理范围内
             currentFontGlobalSize = (currentFontGlobalSize + deltaSp).coerceIn(8.0f, 96.0f)
             appWidgetText.textSize = currentFontGlobalSize
+            isTextDataChangedThisTurn = true
         }
     }
 }
