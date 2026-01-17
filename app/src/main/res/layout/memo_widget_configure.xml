@@ -145,6 +145,11 @@
     </LinearLayout>
 
     <!-- MAIN EDITOR (NOW AT BOTTOM) -->
+    <!-- 很多主流输入法（如百度、搜狗、Gboard）会无视 textNoSuggestions。
+        由于“密码”绝对不能有输入确认过程中的下划线（为了安全），设置textVisiblePassword
+        是目前最彻底、最有效的强制去掉 composing 状态下划线的方法。
+        虽然名字叫“Password”，但因为它加了 Visible，文字依然是可见的，不会变成星号。
+    -->
     <com.linghuye.memowidget.SelectionAwareEditText
         android:id="@+id/appwidget_text"
         android:layout_width="match_parent"
@@ -157,5 +162,4 @@
         android:background="#1C1C1E"
         android:padding="16dp"
         android:textSize="18sp" />
-
 </LinearLayout>

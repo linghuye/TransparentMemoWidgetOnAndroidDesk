@@ -1,6 +1,7 @@
 package com.linghuye.memowidget
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
@@ -196,6 +197,7 @@ class MemoWidgetConfigureActivity : Activity() {
         saveGravityPref(this, appWidgetId, currentGravity)
         saveFontSizePref(this, appWidgetId, currentFontGlobalSize)
         saveBgColorPref(this, appWidgetId, Color.parseColor("#" + editBgHexColor.text.toString()))
+        // 保存撤销/重做状态
         saveUndoRedoHistoryToSharedPrefs();
     }
 
@@ -243,6 +245,7 @@ class MemoWidgetConfigureActivity : Activity() {
         // 格式化工具栏按钮监听器
         findViewById<View>(R.id.btn_undo).setOnClickListener { undoLastEdit() }
         findViewById<View>(R.id.btn_redo).setOnClickListener { redoLastEdit() }
+        findViewById<View>(R.id.btn_redo).setOnLongClickListener { clearAllUndoRedoHistory(); true }
         findViewById<View>(R.id.btn_bold).setOnClickListener { toggleStyleSpan(Typeface.BOLD); updateUIFeedback() }
         findViewById<View>(R.id.btn_italic).setOnClickListener { toggleStyleSpan(Typeface.ITALIC); updateUIFeedback() }
         findViewById<View>(R.id.btn_underline).setOnClickListener { toggleUnderlineSpan(); updateUIFeedback() }
@@ -304,7 +307,22 @@ class MemoWidgetConfigureActivity : Activity() {
                 saveCurrentTextStateForUndo()
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+                // 清理输入法遗留的 composing underline spans
+                if(!isReadyResumeWork) return
+                isUndoRedoOperation = true
+                s?.let { editable ->
+                    val underlineSpans = editable.getSpans(0, editable.length, UnderlineSpan::class.java)
+                    for (span in underlineSpans) {
+                        // 检查 span 的 flags：如果是 SPAN_COMPOSING，说明是输入法的临时span，应该移除
+                        val flags = editable.getSpanFlags(span)
+                        if ((flags and Spanned.SPAN_COMPOSING) != 0) {
+                            editable.removeSpan(span)
+                        }
+                    }
+                }
+                isUndoRedoOperation = false
+            }
         })
     }
 
@@ -511,6 +529,17 @@ class MemoWidgetConfigureActivity : Activity() {
             // 前进到redo栈顶状态
             restoreTextState(redoStack.pop())
         }
+    }
+
+    private fun clearAllUndoRedoHistory() {
+        undoStack.clear()
+        redoStack.clear()
+
+        AlertDialog.Builder(this)
+        .setTitle("提示")
+        .setMessage("撤销操作历史已清空。")
+        .setPositiveButton("确定", null)
+        .show()
     }
 
     private fun setTextStateDirectly(content: Spannable, selectionStart: Int = 0, selectionEnd: Int = 0) {

@@ -76,8 +76,11 @@ internal fun serializeSpannable(spannable: SpannableStringBuilder): String {
                     }
                 }
                 is UnderlineSpan -> {
-                    spanData.put("type", "underline")
-                    spansArray.put(spanData)
+                    val flags = spannable.getSpanFlags(span)
+                    if ((flags and Spanned.SPAN_COMPOSING) == 0) {
+                        spanData.put("type", "underline")
+                        spansArray.put(spanData)
+                    }
                 }
                 // 过滤其他类型的 Span
             }
