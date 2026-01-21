@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.*
@@ -225,6 +226,8 @@ class MemoWidgetConfigureActivity : Activity() {
         this.loadUndoRedoStateFromSharedPrefs()
 
         updateAlignmentUI()
+
+        findViewById<View>(R.id.btn_redo).setEnabled(false)
     }
 
     private fun setupAllEditControlsEventsListeners() {
@@ -357,11 +360,11 @@ class MemoWidgetConfigureActivity : Activity() {
         val isUnderline = underlineSpans.isNotEmpty()
 
         // Kotlin 的 `if` 表达式可以直接作为值赋给 setBackgroundColor
-        val activeColor = Color.parseColor("#0A84FF")
-        val inactiveColor = Color.parseColor("#3A3A3C")
-        findViewById<View>(R.id.btn_bold).setBackgroundColor(if (isBold) activeColor else inactiveColor)
-        findViewById<View>(R.id.btn_italic).setBackgroundColor(if (isItalic) activeColor else inactiveColor)
-        findViewById<View>(R.id.btn_underline).setBackgroundColor(if (isUnderline) activeColor else inactiveColor)
+        val activeColor = ColorStateList.valueOf(Color.parseColor("#0A84FF"))
+        val inactiveColor = ColorStateList.valueOf(Color.parseColor("#3A3A3C"))
+        findViewById<View>(R.id.btn_bold).backgroundTintList = if (isBold) activeColor else inactiveColor
+        findViewById<View>(R.id.btn_italic).backgroundTintList = if (isItalic) activeColor else inactiveColor
+        findViewById<View>(R.id.btn_underline).backgroundTintList = if (isUnderline) activeColor else inactiveColor
     }
 
     /** 如果调色板中的颜色盒与当前的背景或选中的文本颜色相匹配，则突出显示它们。 */
@@ -435,10 +438,10 @@ class MemoWidgetConfigureActivity : Activity() {
         for (i in alignIds.indices) {
             val v = findViewById<View>(alignIds[i])
             if (gravities[i] == currentGravity) {
-                v.setBackgroundColor(Color.parseColor("#0A84FF"))
+                v.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#0A84FF"))
             } 
             else {
-                v.setBackgroundColor(Color.parseColor("#3A3A3C"))
+                v.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#3A3A3C"))
             }
         }
     }
@@ -519,6 +522,8 @@ class MemoWidgetConfigureActivity : Activity() {
         // 弹出并应用前一个状态
         restoreTextState(undoStack.pop())
         isTextDataChangedThisTurn = true
+
+        findViewById<View>(R.id.btn_redo).setEnabled(true)
     }
 
     /** 在历史堆栈中向前移动。 */
@@ -528,6 +533,10 @@ class MemoWidgetConfigureActivity : Activity() {
             saveCurrentTextStateForUndo()
             // 前进到redo栈顶状态
             restoreTextState(redoStack.pop())
+            
+            if(redoStack.isEmpty()) {
+                findViewById<View>(R.id.btn_redo).setEnabled(false)
+            }
         }
     }
 
@@ -807,6 +816,7 @@ class MemoWidgetConfigureActivity : Activity() {
             
             // 7. 刷新显示：保存光标位置后重新设置文本，触发重新布局
             setTextStateDirectly(spannable, selectionStart, selectionEnd)
+            isTextDataChangedThisTurn = true
         } 
         else 
         {
